@@ -15,88 +15,158 @@ public class TennisGame2 implements TennisGame
 
     public String getScore(){
         String score = "";
-        if (P1point == P2point && P1point < 4)
-        {
-            if (P1point==0)
-                score = "Love";
-            if (P1point==1)
-                score = "Fifteen";
-            if (P1point==2)
-                score = "Thirty";
-            score += "-All";
-        }
-        if (P1point==P2point && P1point>=3)
-            score = "Deuce";
+        score = equalPoints();
+        score = advantagePlayer1(score);
+        score = advantagePlayer2(score);
+        score = midGamePlayer1(score);
+        score = midGamePlayer2(score);
+        score = p1Lead(score);
+        score = p2Lead(score);
+        score = p1Winning(score);
+        score = p2Winning(score);
+        return score;
+    }
 
-        if (P1point > 0 && P2point==0)
-        {
-            if (P1point==1)
-                P1res = "Fifteen";
-            if (P1point==2)
-                P1res = "Thirty";
-            if (P1point==3)
-                P1res = "Forty";
-
-            P2res = "Love";
-            score = P1res + "-" + P2res;
+    private String p2Winning(String score) {
+        if (P2point >= 4 && P1point >= 0 && (P2point - P1point) >= 2) {
+            score = "Win for player2";
         }
-        if (P2point > 0 && P1point==0)
-        {
-            if (P2point==1)
-                P2res = "Fifteen";
-            if (P2point==2)
-                P2res = "Thirty";
-            if (P2point==3)
-                P2res = "Forty";
+        return score;
+    }
 
-            P1res = "Love";
-            score = P1res + "-" + P2res;
-        }
-
-        if (P1point>P2point && P1point < 4)
-        {
-            if (P1point==2)
-                P1res="Thirty";
-            if (P1point==3)
-                P1res="Forty";
-            if (P2point==1)
-                P2res="Fifteen";
-            if (P2point==2)
-                P2res="Thirty";
-            score = P1res + "-" + P2res;
-        }
-        if (P2point>P1point && P2point < 4)
-        {
-            if (P2point==2)
-                P2res="Thirty";
-            if (P2point==3)
-                P2res="Forty";
-            if (P1point==1)
-                P1res="Fifteen";
-            if (P1point==2)
-                P1res="Thirty";
-            score = P1res + "-" + P2res;
-        }
-
-        if (P1point > P2point && P2point >= 3)
-        {
-            score = "Advantage player1";
-        }
-
-        if (P2point > P1point && P1point >= 3)
-        {
-            score = "Advantage player2";
-        }
-
+    private String p1Winning(String score) {
         if (P1point>=4 && P2point>=0 && (P1point-P2point)>=2)
         {
             score = "Win for player1";
         }
-        if (P2point>=4 && P1point>=0 && (P2point-P1point)>=2)
+        return score;
+    }
+
+    private String p2Lead(String score) {
+        if (P2point > P1point && P1point >= 3)
         {
-            score = "Win for player2";
+            score = "Advantage player2";
         }
         return score;
+    }
+
+    private String p1Lead(String score) {
+        if (P1point > P2point && P2point >= 3)
+        {
+            score = "Advantage player1";
+        }
+        return score;
+    }
+
+    private String midGamePlayer2(String score) {
+        if (P2point>P1point && P2point < 4)
+        {
+            switch (P2point){
+                case 2:
+                    P2res="Thirty";
+                    break;
+                case 3:
+                    P2res="Forty";
+                    break;
+            }
+            switch (P1point)
+            {
+                case 1:
+                    P1res="Fifteen";
+                    break;
+                case 2:
+                    P1res="Thirty";
+                    break;
+            }
+            score = P1res + "-" + P2res;
+        }
+        return score;
+    }
+
+    private String midGamePlayer1(String score) {
+        if (P1point>P2point && P1point < 4)
+        {
+            switch (P1point){
+                case 2:
+                    P1res="Thirty";
+                    break;
+                case 3:
+                    P1res="Forty";
+                    break;
+            }
+            switch (P2point)
+            {
+                case 1:
+                    P2res="Fifteen";
+                    break;
+                case 2:
+                    P2res="Thirty";
+                    break;
+            }
+
+            score = P1res + "-" + P2res;
+        }
+        return score;
+    }
+
+    private String advantagePlayer2(String score) {
+        if (P2point > 0 && P1point==0)
+        {
+            switch (P2point){
+                case 1:
+                    P2res = "Fifteen";
+                    break;
+                case 2:
+                    P2res = "Thirty";
+                    break;
+                case 3:
+                    P2res = "Forty";
+                    break;
+            }
+
+            P1res = "Love";
+            score = P1res + "-" + P2res;
+        }
+        return score;
+    }
+
+    private String advantagePlayer1(String score) {
+        if (P1point > 0 && P2point==0)
+        {
+
+            switch (P1point){
+                case 1:
+                    P1res = "Fifteen";
+                    break;
+                case 2:
+                    P1res = "Thirty";
+                    break;
+                case 3:
+                    P1res = "Forty";
+                    break;
+            }
+
+            P2res = "Love";
+            score = P1res + "-" + P2res;
+        }
+        return score;
+    }
+
+    private String equalPoints() {
+        if (P1point == P2point)
+        {
+            switch (P1point){
+                case 0:
+                    return  "Love-All";
+                case 1:
+                    return "Fifteen-All";
+                case 2:
+                    return "Thirty-All";
+                default:
+                    return  "Deuce";
+            }
+        }
+        return "";
     }
 
     public void SetP1Score(int number){
