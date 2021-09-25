@@ -104,7 +104,7 @@ public class TennisGame1 implements TennisGame {
             case 2:
                 return "Thirty-All";
             default:
-                return "Deuce";
+                return "";
         }
     }
 }
